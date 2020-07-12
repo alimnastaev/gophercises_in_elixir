@@ -17,9 +17,7 @@ defmodule CsvQuiz do
     |> Enum.map(&String.split(&1, ","))
   end
 
-  defp solution(array, iteration, acc) do
-    [question, answer] = array
-
+  defp solution([question, answer], iteration, acc) do
     num = iteration + 1
     input = IO.gets("Problem ##{num}: #{question} = ") |> String.trim()
 
