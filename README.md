@@ -9,6 +9,7 @@ https://courses.calhoun.io/courses/cor_gophercises
 https://courses.calhoun.io/lessons/les_goph_01
 
 `lib/1_csv_quiz.ex`
+`lib/1_csv_quiz_problems.csv` - csv file
 
 ```
 ❯ iex -S mix
