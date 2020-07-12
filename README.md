@@ -1,4 +1,4 @@
-![Elixir CI](https://github.com/alimnastaev/calhoun_in_elixir/workflows/Elixir%20CI/badge.svg)
+![Elixir CI](https://github.com/alimnastaev/gophercises_in_elixir/workflows/Elixir%20CI/badge.svg)
 
 # Gophercises in Elixir
 
