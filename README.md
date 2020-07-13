@@ -12,11 +12,7 @@ https://courses.calhoun.io/lessons/les_goph_01
 - `lib/1_csv_quiz_problems.csv` - csv file
 
 ```
-❯ iex -S mix
-Erlang/OTP 22 [erts-10.4.1] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
-
-Interactive Elixir (1.9.0) - press Ctrl+C to exit (type h() ENTER for help)
-iex(1)> CsvQuiz.csv_quiz("path to your csv")
+❯ elixir lib/1_csv_quiz.ex
 
 Problem #1: 5+5 = 10
 Problem #2: 1+1 = 2
