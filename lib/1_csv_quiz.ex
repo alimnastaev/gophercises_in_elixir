@@ -2,16 +2,27 @@ defmodule CsvQuiz do
   @moduledoc """
   Documentation for CsvQuiz.
   """
-  def csv_quiz(path) do
-    [i, s] =
-      parser(path)
-      |> Enum.reduce([0, 0], fn array, [iteration, acc] -> solution(array, iteration, acc) end)
 
-    IO.puts("\nYou scored #{s} of #{i}.")
+  def csv_quiz(path) do
+    # case statement to handle error if something wrong
+    # with csv file or the path
+    case File.read(path) do
+      {:error, reason} ->
+        IO.puts("#{:file.format_error(reason)}")
+
+      {:ok, file} ->
+        [_, result] =
+          parser(file)
+          |> Enum.reduce([0, 0], fn array, [iteration, acc] -> solution(array, iteration, acc) end)
+
+        IO.puts("\nYou scored #{result} of #{length(parser(file))}.")
+    end
   end
 
-  defp parser(path) do
-    File.read!(path)
+  # function to parse a csv file and shape it to
+  # to iterate: [[problem, answer]]
+  defp parser(file) do
+    file
     |> String.split("\n")
     |> Enum.reject(fn x -> x == "" end)
     |> Enum.map(&String.split(&1, ","))
@@ -31,3 +42,7 @@ defmodule CsvQuiz do
     [num, result]
   end
 end
+
+path = System.argv()
+
+CsvQuiz.csv_quiz(path)
