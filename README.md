@@ -12,7 +12,7 @@ https://courses.calhoun.io/lessons/les_goph_01
 - `lib/1_csv_quiz_problems.csv` - csv file
 
 ```
-❯ elixir lib/1_csv_quiz.ex
+❯ elixir lib/1_csv_quiz.ex "<path to your csv file>"
 
 Problem #1: 5+5 = 10
 Problem #2: 1+1 = 2
