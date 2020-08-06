@@ -23,8 +23,7 @@ defmodule CsvQuiz do
   # to iterate: [[problem, answer]]
   defp parser(file) do
     file
-    |> String.split("\n")
-    |> Enum.reject(fn x -> x == "" end)
+    |> String.split("\n", trim: true)
     |> Enum.map(&String.split(&1, ","))
   end
 
