@@ -32,7 +32,6 @@ defmodule CsvQuiz do
   defp shaping_result(_input, _answer, acc), do: acc
 end
 
-
 path = System.argv()
 
 CsvQuiz.csv_quiz(path)
