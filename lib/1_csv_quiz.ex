@@ -38,8 +38,8 @@ defmodule CsvQuiz do
     [num, result]
   end
 
-  defp shaping_result(input, answer, acc) when input == answer, do: acc + 1
-  defp shaping_result(_input, _answer, acc), do: acc
+  defp build_result(input, input, acc), do: acc + 1
+  defp build_result(_, _, acc), do: acc
 end
 
 path = System.argv()
