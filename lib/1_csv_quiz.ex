@@ -1,27 +1,22 @@
 defmodule CsvQuiz do
   def csv_quiz(path) do
-    path
-    |> read_file()
-    |> implemenation()
+    path |> read_file() |> implementation()
   end
 
   defp read_file(path), do: File.read(path)
 
-  defp implemenation({:ok, file}) do
+  defp implementation({:ok, file}) do
     [_, result] =
       file
       |> parser()
       |> Enum.reduce([0, 0], fn array, [iteration, acc] -> solution(array, iteration, acc) end)
 
-    length =
-      file
-      |> parser()
-      |> length()
+    length = file |> parser() |> length()
 
     IO.puts("\nYou scored #{result} of #{length}.")
   end
 
-  defp implemenation({:error, reason}), do: IO.puts("#{:file.format_error(reason)}")
+  defp implementation({:error, reason}), do: IO.puts("#{:file.format_error(reason)}")
 
   defp parser(file) do
     file
@@ -31,9 +26,10 @@ defmodule CsvQuiz do
 
   defp solution([question, answer], iteration, acc) do
     num = iteration + 1
-    input = IO.gets("Problem ##{num}: #{question} = ") |> String.trim()
 
-    result = shaping_result(input, answer, acc)
+    input = "Problem ##{num}: #{question} = " |> IO.gets() |> String.trim()
+
+    result = build_result(input, answer, acc)
 
     [num, result]
   end
