@@ -1,43 +1,38 @@
 defmodule CsvQuiz do
   def csv_quiz(path) do
-    path |> read_file() |> implementation()
+    path |> File.read() |> build_score()
   end
 
-  defp read_file(path), do: File.read(path)
+  defp build_score({:error, reason}), do: IO.puts("#{:file.format_error(reason)}")
 
-  defp implementation({:ok, file}) do
-    [_, result] =
-      file
-      |> parser()
-      |> Enum.reduce([0, 0], fn array, [iteration, acc] -> solution(array, iteration, acc) end)
-
-    length = file |> parser() |> length()
-
-    IO.puts("\nYou scored #{result} of #{length}.")
-  end
-
-  defp implementation({:error, reason}), do: IO.puts("#{:file.format_error(reason)}")
-
-  defp parser(file) do
+  defp build_score({:ok, file}) do
     file
-    |> String.split("\n", trim: true)
-    |> Enum.map(&String.split(&1, ","))
+    |> parse()
+    |> Enum.reduce({0, 0}, fn [question, expected_answer], {score, counter} ->
+      counter = counter + 1
+
+      score =
+        question
+        |> ask(counter)
+        |> then(fn
+          answer when answer == expected_answer -> score + 1
+          _ -> score
+        end)
+
+      {score, counter}
+    end)
+    |> then(fn {score, counter} ->
+      IO.puts("\nYou scored #{score} of #{counter}.")
+    end)
   end
 
-  defp solution([question, answer], iteration, acc) do
-    num = iteration + 1
-
-    input = "Problem ##{num}: #{question} = " |> IO.gets() |> String.trim()
-
-    result = build_result(input, answer, acc)
-
-    [num, result]
+  defp ask(question, counter) do
+    "Problem ##{counter}: #{question} = " |> IO.gets() |> String.trim()
   end
 
-  defp build_result(input, input, acc), do: acc + 1
-  defp build_result(_, _, acc), do: acc
+  defp parse(file) do
+    file |> String.split("\n", trim: true) |> Enum.map(&String.split(&1, ","))
+  end
 end
 
-path = System.argv()
-
-CsvQuiz.csv_quiz(path)
+CsvQuiz.csv_quiz(System.argv())
